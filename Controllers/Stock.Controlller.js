@@ -22,6 +22,7 @@ module.exports = {
     // ! Cleaner than Promises
     try {
       const stock = new Stock(req.body);
+      stock.date = new Date();
       const result = await stock.save();
       res.send(result);
     } catch (error) {

@@ -14,6 +14,10 @@ const StockSchema = new Schema({
     type: Number,
     required: true,
   },
+  date: {
+    type: Date,
+    required: true
+  },
 });
 
 const Stock = mongoose.model("stock", StockSchema);
