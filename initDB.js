@@ -1,5 +1,4 @@
 const { default: mongoose } = require("mongoose");
-const dotEnv = require("dotenv").config();
 
 module.exports = () => {
   mongoose

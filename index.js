@@ -1,5 +1,6 @@
 const express = require("express");
 const CreateError = require("http-errors");
+const dotEnv = require("dotenv").config();
 
 const app = express();
 
