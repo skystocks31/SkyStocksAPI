@@ -22,8 +22,8 @@ const StockSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
+  dateTime: {
+    type: String,
     required: true
   },
 });

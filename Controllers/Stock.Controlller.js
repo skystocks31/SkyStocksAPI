@@ -20,7 +20,11 @@ module.exports = {
     // ! Cleaner than Promises
     try {
       const stock = new Stock(req.body);
-      stock.date = new Date();
+      const now = new Date();
+      // get the current date and time as a string
+      const currentDateTime = now.toLocaleString();
+      console.log('timedata', now, currentDateTime);
+      stock.dateTime = currentDateTime;
       const result = await stock.save();
       res.send(result);
     } catch (error) {
@@ -70,6 +74,10 @@ module.exports = {
     try {
       const id = req.params.id;
       const updates = req.body;
+      const now = new Date();
+      // get the current date and time as a string
+      const currentDateTime = now.toLocaleString();
+      updates.dateTime = currentDateTime;
       const options = { new: true };
       const result = await Stock.findByIdAndUpdate(id, updates, options);
       if (!result) {
