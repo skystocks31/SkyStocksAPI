@@ -6,12 +6,20 @@ const StockSchema = new Schema({
     type: String,
     required: true,
   },
-  price: {
+  entryPrice: {
+    type: Number,
+    required: true,
+  },
+  stopLoss: {
     type: Number,
     required: true,
   },
   target: {
     type: Number,
+    required: true,
+  },
+  strategy: {
+    type: String,
     required: true,
   },
   date: {

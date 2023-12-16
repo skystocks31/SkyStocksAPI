@@ -7,9 +7,7 @@ module.exports = {
   getAllStocks: async (req, res, next) => {
     // * .find(query, projection)
     try {
-      const results = await Stock.find({}, { __v: 0 }); //  To omit certain field
-      //const results = await Stock.find({}, { name: 1, _id: 0 });  To get particular field
-      //const results = await Stock.find({ price: 41 }, { __v: 0 }); Pass Query
+      const results = await Stock.find({}, { __v: 0 });
       res.send(results);
     } catch (error) {
       console.log(error.message);
@@ -33,7 +31,7 @@ module.exports = {
       }
     }
 
-    // ! Using Promise
+    // * Using Promise
     // const stock = new Stock({
     //   name: req.body.name,
     //   price: req.body.price,
