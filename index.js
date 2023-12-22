@@ -1,6 +1,6 @@
 const express = require("express");
 const CreateError = require("http-errors");
-const cors = require('cors');
+const cors = require("cors");
 const dotEnv = require("dotenv").config();
 
 const app = express();
@@ -9,12 +9,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const StockRoute = require("./Routes/Stock.route");
+const UserRoute = require("./Routes/User.route");
+
 // Initialize DB
 require("./initDB")();
 
 // Initialize Route
-const StockRoute = require("./Routes/Stock.route");
 app.use("/stocks", StockRoute);
+app.use("/users", UserRoute);
 
 // For unknown routes
 app.use((req, res, next) => {

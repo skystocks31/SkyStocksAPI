@@ -15,13 +15,11 @@ module.exports = {
   },
 
   createNewStock: async (req, res, next) => {
-    console.log(req.body);
-    // ! Using async-await
-    // ! Cleaner than Promises
+    // * Using async-await
     try {
       const stock = new Stock(req.body);
       const result = await stock.save();
-      res.send(result);
+      res.sendStatus(200);
     } catch (error) {
       console.log(error.message);
       if (error.name == "ValidationError") {
@@ -74,7 +72,7 @@ module.exports = {
       if (!result) {
         throw CreateError(404, "Product doesn't exists");
       }
-      res.send(result);
+      res.sendStatus(200);
     } catch (error) {
       console.log(error.message);
       if (error instanceof mongoose.CastError) {
@@ -92,7 +90,7 @@ module.exports = {
       if (!result) {
         throw CreateError(404, "Product doesn't exists");
       }
-      res.send(result);
+      res.sendStatus(200);
     } catch (error) {
       //console.log(error.message);
       if (error instanceof mongoose.CastError) {
