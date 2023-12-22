@@ -33,7 +33,7 @@ module.exports = {
         { mobile: result.mobile, id: result._id },
         process.env.SECRET_KEY
       );
-      res.status(201).json({ user: result, token: token });
+      res.status(201).json({ message: "Useer Registered Successfully" });
     } catch (error) {
       res.status(500).json({ message: "Something went wrong" });
     }
