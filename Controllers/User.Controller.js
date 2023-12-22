@@ -1,11 +1,6 @@
-const CreateError = require("http-errors");
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 const UserModel = require("../Models/Users.model");
-
-const SECRET_KEY = "SKYSTOCKSAPI";
 
 module.exports = {
   signUp: async (req, res) => {
@@ -36,12 +31,10 @@ module.exports = {
 
       const token = jwt.sign(
         { mobile: result.mobile, id: result._id },
-        SECRET_KEY
+        process.env.SECRET_KEY
       );
       res.status(201).json({ user: result, token: token });
     } catch (error) {
-      console.log("error", error);
-
       res.status(500).json({ message: "Something went wrong" });
     }
   },
@@ -54,14 +47,10 @@ module.exports = {
         return res.status(404).json({ messsage: "User not registered" });
       }
 
-      //console.log("password", password, existingUser[0].password);
-      //console.log("existingUser", existingUser);
       const matchPassword = await bcrypt.compare(
         password,
         existingUser[0].password
       );
-
-      console.log("matchPassword", matchPassword);
 
       if (!matchPassword) {
         return res.status(400).json({ message: "Invalid Credentials" });
@@ -69,11 +58,10 @@ module.exports = {
 
       const token = jwt.sign(
         { mobile: existingUser.mobile, id: existingUser._id },
-        SECRET_KEY
+        process.env.SECRET_KEY
       );
       res.status(201).json({ user: existingUser, token: token });
     } catch (error) {
-      console.log("Error", error);
       return res.status(500).json({ message: "Something went wrong" });
     }
   },

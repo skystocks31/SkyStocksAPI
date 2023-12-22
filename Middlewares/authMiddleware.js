@@ -1,34 +1,19 @@
+const jwt = require("jsonwebtoken");
 
 module.exports = {
-    APIauth: async (req, res, next) => {
-        try {   
-            const authheader = req.headers.authorization;
-            console.log(req.headers);
-         
-            if (!authheader) {
-                let err = new Error('You are not authenticated!');
-                res.setHeader('WWW-Authenticate', 'Basic');
-                err.status = 401;
-                return next(err)
-            }
-         
-            const auth = new Buffer.from(authheader.split(' ')[1],
-                'base64').toString().split(':');
-            const user = auth[0];
-            const pass = auth[1];
-         
-            if (user == process.env.API_USER && pass == process.env.API_PASS) {
-                console.log("User is Authorised");
-                // If Authorized user
-                next();
-            } else {
-                let err = new Error('You are not authenticated!');
-                res.setHeader('WWW-Authenticate', 'Basic');
-                err.status = 401;
-                return next(err);
-            }
-        } catch (error) {
-          console.log(error);
-        }
+  APIauth: async (req, res, next) => {
+    try {
+      let token = req.headers.authorization;
+      if (token) {
+        token = token.split(" ")[1];
+        let user = jwt.verify(token, process.env.SECRET_KEY);
+        req.userId = user.id;
+      } else {
+        res.status(401).json({ message: "Unauthorized User" });
       }
-}
+      next();
+    } catch (error) {
+      res.status(401).json({ message: "Unauthorized User, Please try again!" });
+    }
+  },
+};
